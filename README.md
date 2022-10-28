@@ -1,2 +1,2 @@
-# Reinforcement Learning Nodes
+# A collection of all my notes
 Joshua Cesare Placidi
