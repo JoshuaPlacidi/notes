@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb, mathrsfs}
+
+\DeclareRobustCommand{\bbone}{\text{\usefont{U}{bbold}{m}{n}1}}
+\DeclareMathOperator{\EX}{\mathbb{E}}% expected value
+
+
+
+\title{Multi Armed Bandits (MAB)}
+\author{Joshua Placidi}
+
+\begin{document}
+
+\maketitle
+
+\section{Notation}
+\begin{itemize}
+    \item MAB is a set of distributions $\{\mathcal{R}_a | a \in \mathcal{A}\}$
+    \item $\mathcal{A}$ is a known set of actions (arms)
+    \item $\mathcal{R}_a$ is a distribution of rewards, given action $a$
+    \item At each timestep, $t$, the agent select an action $A_t \in \mathcal{A}$
+    \item The environment generates a reward $R_t \sim \mathcal{R}_{A_t}$
+    \item The goal is to maximise a cumulative reward $\sum_{i=1}^{t}R_i$
+    \item We achieve the goal by learning a \emph{policy}: a distribution on $\mathcal{A}$
+\end{itemize}
+
+\section{Values and Regret}
+\begin{itemize}
+\item 
+The \emph{action value} for action $a$ is the expected reward:
+\[q(a) = \EX[R_t|A_t=a]\]
+
+\item
+The \emph{optimal value} is:
+\[v_* = \max_{a \in \mathcal{A}} q(a) = \max_{a} \EX[R_t|A_t=a] \]
+
+\item
+\emph{Regret} of an action $a$ is:
+\[\Delta_a = v_* - q(a)\]
+it is a number which represents the difference between the maximum value we could have got (optimal reward) and the observed reward after taking action $a$. By definition there is always at least one action (the optimal action) for which regret is zero. Regret is a way to quantify how 'good' our policy is, if our regret is zero or close to zero our action selection is close to the optimal policy.
+
+
+We would like to minimise our total regret over our lifetime up to some timestep, $t$:
+
+\[L_t = \sum_{n=1}^{t}v_*-q(A_n)=\sum_{n=1}^{t}\Delta_{A_n}\]
+
+Maximise cumulative reward $\equiv$ minimise total regret
+
+\end{itemize}
+
+\section{Algorithms}
+Some algorithms (Greedy, $\epsilon$-greedy, UCB) use \emph{action value estimates}:
+
+\[Q_t(a) \approx q(a)\]
+
+
+where $Q_t(a)$ is an approximation of the true expected reward $q(a)$. A simple estimate can be made by averaging the sampled rewards:
+
+
+\[Q_t(A) = \frac{\sum_{n=1}^t\mathcal{I}(A_n=a)R_n}{\sum_{n=1}^t\mathcal{I}(A_n=a)}\]
+
+where $\mathcal{I}(\dot)$ is the indication function: $\mathcal{I}$(True) = 1 and $\mathcal{I}$(False) = 0.
+
+
+The count for action $a$ is
+
+\[N_t(a) = \sum_{n=1}^t\mathcal{I}(A_n = a)\]
+
+\begin{itemize}
+\item
+\textbf{Greedy} 
+\end{itemize}
+
+\end{document}
+
